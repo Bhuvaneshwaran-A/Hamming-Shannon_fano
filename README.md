@@ -5,62 +5,61 @@ Apply the Huffman and Shannon-Fano to this source.
 Show that by drawing the tree diagram, and 
 Calculate the average code word length, entropy, variance, redundancy, and efficiency.
 # Tools Required:
-- Python with NumPy and SciPy libraries.
-- Google Colab
+colab
+
+matplotlib
 # Program:
 ```
-#Huffman and Shannon-Fano coding
-import numpy as np
-import math 
-L  = 0
-hs = 0
-p = []
-lk = []
-n = int(input("Enter the number of Samples : "))
-for i in range (n): 
-    pr = float(input(f"Enter the probability of sample values {i + 1}: "))  
-    p.append(pr)
-for j in range (n): 
-    l = float(input(f"Enter the length of the sample values {j + 1}: "))  
-    lk.append(l)
-# Avg length of the code word
-for k in range (n):
-    Avg1 = p[k] * lk[k]
-    L = L + Avg1
+import math
+
+# Probabilities given
+p = [0.125, 0.0625, 0.25, 0.0625, 0.125, 0.125, 0.25]
+
+# Corresponding Huffman/Shannon-Fano code lengths
+lk = [3, 4, 2, 4, 3, 3, 2]
+
+n = len(p)
+
+# Average Codeword Length
+L = sum(p[k] * lk[k] for k in range(n))
+
 # Entropy
-for k in range (n):
-    e = p[k] * math.log(1 / p[k], 2)
-    hs = hs + e
-hs = round(hs,3)
-# Efficiency
-eff =  hs / L
-eff = round(eff,3)
-# Redundancy 
-red =  round(1 - eff,3) 
-# Variance
-var = 0
-for k in range(n):
-    var1 = p[k] * (lk[k]-L)**2
-    var = var + var1
-var = round(var,3)
+hs = sum(p[k] * math.log(1 / p[k], 2) for k in range(n))
+hs = round(hs, 3)
+
+# Efficiency & Redundancy
+eff = round(hs / L, 3)
+red = round(1 - eff, 3)
+
+# Variance of codeword length
+var = sum(p[k] * (lk[k] - L) ** 2 for k in range(n))
+var = round(var, 3)
+
 print(f"Average Codeword Length is : {L}")
 print(f"Entropy is : {hs}")
-print(f"Efficiency is : {eff}")
-print(f"Redudancy is : {red}")
-print(f"Variance is : {var}") 
+print(f"Efficiency is : {eff * 100}%")
+print(f"Redundancy is : {red}")
+print(f"Variance is : {var}")
+
 ```
 # Calculation:
 
-![WhatsApp Image 2025-09-24 at 18 06 29_8baed3f7](https://github.com/user-attachments/assets/550a48a5-e3f4-4789-9a44-3195506d7328)
+![WhatsApp Image 2025-08-31 at 17 07 06_76d235e9](https://github.com/user-attachments/assets/a09a5720-1cab-4c3b-bf71-b46a67ba4f47)
 
-![WhatsApp Image 2025-09-24 at 18 08 09_bd6bf33a](https://github.com/user-attachments/assets/c1d89749-716c-49d6-bd7b-ab5156cfeff4)
+![WhatsApp Image 2025-08-31 at 17 07 06_5af6939e](https://github.com/user-attachments/assets/993444c2-91bd-4f81-9026-9b9e41789920)
 
 
 
 # Output
 
-<img width="548" height="561" alt="image" src="https://github.com/user-attachments/assets/0bd90181-20d7-41e4-b345-70b67dabf2a3" />
+<img width="357" height="112" alt="image" src="https://github.com/user-attachments/assets/75fc03e2-2e27-465f-ba97-a155790eab7e" />
+
+
 
 # Results:
 
-The Huffman and Shannon-Fano coding techniques have been successfully applied to the given source. The average codeword length, entropy, variance, redundancy, and efficiency have been computed.
+For the given discrete memoryless source with probabilities
+{0.125,0.0625,0.25,0.0625,0.125,0.125,0.25},
+both Huffman and Shannon–Fano coding were applied. The simulation was carried out in Python (Google Colab).
+Since the source probabilities are exact powers of two, the codeword lengths match the ideal values, giving zero redundancy and 100% coding efficiency. Both Huffman and Shannon–Fano yield identical results.
+
